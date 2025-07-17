@@ -1,23 +1,49 @@
 import { SplashScreen, Stack } from "expo-router";
-import './global.css';
-import { useFonts } from 'expo-font'
+import "./global.css";
+import { useFonts } from "expo-font";
 import { useEffect } from "react";
+import * as Sentry from "@sentry/react-native";
+import useAuthStore from "@/store/auth.store";
 
-export default function RootLayout() {
+Sentry.init({
+  dsn: "https://d60b698b433714ac1fab0a907fbd1f73@o4509685047623680.ingest.de.sentry.io/4509685079539792",
 
+  // Adds more context data to events (IP address, cookies, user, etc.)
+  // For more information, visit: https://docs.sentry.io/platforms/react-native/data-management/data-collected/
+  sendDefaultPii: true,
+
+  // Configure Session Replay
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1,
+  integrations: [
+    Sentry.mobileReplayIntegration(),
+    Sentry.feedbackIntegration(),
+  ],
+
+  // uncomment the line below to enable Spotlight (https://spotlightjs.com)
+  // spotlight: __DEV__,
+});
+
+export default Sentry.wrap(function RootLayout() {
+  const { isLoading, fetchAuthenticatedUser } = useAuthStore();
   const [fontsLoaded, error] = useFonts({
-    "QuickSand-Bold": require('../assets/fonts/Quicksand-Bold.ttf'),
-    "QuickSand-Medium": require('../assets/fonts/Quicksand-Medium.ttf'),
-    "QuickSand-Regular": require('../assets/fonts/Quicksand-Regular.ttf'),
-    "QuickSand-SemiBold": require('../assets/fonts/Quicksand-SemiBold.ttf'),
-    "QuickSand-Light": require('../assets/fonts/Quicksand-Light.ttf'),
+    "QuickSand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
+    "QuickSand-Medium": require("../assets/fonts/Quicksand-Medium.ttf"),
+    "QuickSand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
+    "QuickSand-SemiBold": require("../assets/fonts/Quicksand-SemiBold.ttf"),
+    "QuickSand-Light": require("../assets/fonts/Quicksand-Light.ttf"),
   });
 
   useEffect(() => {
-    if(error) throw error;
-    if(fontsLoaded) SplashScreen.hideAsync();
+    if (error) throw error;
+    if (fontsLoaded) SplashScreen.hideAsync();
+  }, [fontsLoaded, error]);
 
-  }, [fontsLoaded, error])
+  useEffect(() => {
+    fetchAuthenticatedUser();
+  }, [])
 
-  return <Stack screenOptions={{ headerShown: false}}/>;
-}
+  if(!fontsLoaded || isLoading) return null;
+
+  return <Stack screenOptions={{ headerShown: false }} />;
+});
