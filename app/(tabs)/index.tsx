@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import cn from "clsx";
 import CardButton from "@/components/CardButton";
 import useAuthStore from "@/store/auth.store";
+import { router } from "expo-router";
 
 export default function Index() {
 
@@ -31,6 +32,7 @@ export default function Index() {
                 )}
                 style={{ backgroundColor: item.color }}
                 android_ripple={{ color: "#ffff22" }}
+                onPress={() => router.push(`/search?category=${item.categoryId}`)}
               >
                 {({ pressed }) => (
                   <>

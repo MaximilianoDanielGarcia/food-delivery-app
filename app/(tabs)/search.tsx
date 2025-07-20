@@ -10,6 +10,7 @@ import MenuCard from "@/components/MenuCard";
 import { Category, MenuItem } from "@/type";
 import SearchBar from "@/components/SearchBar";
 import Filter from "@/components/Filter";
+import NoResultsSearch from "@/components/NoResultsSearch";
 
 const Search = () => {
   const { category, query } = useLocalSearchParams<{
@@ -66,7 +67,7 @@ const Search = () => {
                 <Filter categories={categories as Category[]} />
             </View>
         )}
-        ListEmptyComponent={() => !loading && <Text>No results.</Text>}
+        ListEmptyComponent={() => !loading && <NoResultsSearch />}
       ></FlatList>
     </SafeAreaView>
   );

@@ -78,6 +78,17 @@ export const signIn = async ({ email, password }: SignInParams) => {
   }
 };
 
+export const getSession = async () => {
+  try {
+    
+    const session = await account.getSession("current");
+    if (!session) throw Error;
+    
+  } catch (e) {
+    throw new Error(e as string);
+  }
+}
+
 export const getCurrentUser = async () => {
   try {
     const currentAccount = await account.get();
@@ -97,6 +108,15 @@ export const getCurrentUser = async () => {
     throw new Error(e as string);
   }
 };
+
+export const deleteSession = async () => {
+  try {
+    
+    await account.deleteSession("current");
+  } catch (e) {
+    throw new Error(e as string);
+  }
+}
 
 export const getMenu = async ({ category, query }: GetMenuParams) => {
   try {

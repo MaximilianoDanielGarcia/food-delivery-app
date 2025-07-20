@@ -70,24 +70,28 @@ export const offers = [
         title: "SUMMER COMBO",
         image: burgerOne,
         color: "#D33B0D",
+        categoryId: ""
     },
     {
         id: 2,
         title: "BURGER BASH",
         image: burgerTwo,
         color: "#DF5A0C",
+        categoryId: "687ab305002ce109358d"
     },
     {
         id: 3,
         title: "PIZZA PARTY",
         image: pizzaOne,
         color: "#084137",
+        categoryId: "687ab3060004e4b23346"
     },
     {
         id: 4,
         title: "BURRITO DELIGHT",
         image: buritto,
         color: "#EB920C",
+        categoryId: "687ab306001b2b879260"
     },
 ];
 

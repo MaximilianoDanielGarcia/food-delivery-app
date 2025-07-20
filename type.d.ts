@@ -53,6 +53,7 @@ interface TabBarIconProps {
     focused: boolean;
     icon: ImageSourcePropType;
     title: string;
+    totalItems?: number;
 }
 
 interface PaymentInfoStripeProps {
